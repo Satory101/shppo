@@ -3,20 +3,32 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Stack;
+import java.util.Arrays;
+import java.util.List;
 
 public class DocumentEditorGUI extends JFrame {
 
-    private TextDocument document;
+    private Document document; // Работа с абстракцией
     private DocumentHistoryLogger historyLogger;
-    private SaveTextDocumentCommand saveTextDocumentCommand;
+    private SaveDocumentCommand saveDocumentCommand;
 
     public DocumentEditorGUI() {
         super("Document Editor");
 
-        document = new TextDocument();
+        // 1. Проверка типа ПЕРЕД вызовом фабрики
+        String targetType = "TextDocument";
+        List<String> validTypes = Arrays.asList("TextDocument", "SpreadsheetDocument");
+
+        if (!validTypes.contains(targetType)) {
+            throw new IllegalArgumentException("Unknown document type requested: " + targetType);
+        }
+
+        DocumentFactory factory = new ConcreteDocumentFactory();
+        document = factory.createDocument(targetType);
+
         historyLogger = new DocumentHistoryLogger();
-        saveTextDocumentCommand = new SaveTextDocumentCommand(document, historyLogger);
-        document.addObserver(new ConcreteDocumentObserver(saveTextDocumentCommand));
+        saveDocumentCommand = new SaveDocumentCommand(document, historyLogger);
+        document.addObserver(new ConcreteDocumentObserver(saveDocumentCommand));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -54,12 +66,14 @@ public class DocumentEditorGUI extends JFrame {
         });
 
         historyButton.addActionListener(new ActionListener() {
-            @Override
+             @Override
             public void actionPerformed(ActionEvent e) {
                 StringBuilder history = new StringBuilder("Change History:\n");
                 Stack<DocumentMemento> mementos = historyLogger.getHistory();
                 for (DocumentMemento memento : mementos) {
-                    history.append(memento.getType()).append(": ").append(((TextDocumentMemento) memento).getText()).append("\n");
+                    // Избавились от приведения типов с помощью полиморфизма
+                    history.append(memento.getType()).append(": ")
+                            .append(memento.getDetails()).append("\n");
                 }
                 JOptionPane.showMessageDialog(DocumentEditorGUI.this, history.toString());
             }
@@ -75,3 +89,5 @@ public class DocumentEditorGUI extends JFrame {
         setVisible(true);
     }
 }
+
+

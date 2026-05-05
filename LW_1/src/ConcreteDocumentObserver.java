@@ -1,7 +1,7 @@
 public class ConcreteDocumentObserver implements DocumentObserver {
-    private final SaveTextDocumentCommand saveCommand;
+    private final SaveDocumentCommand saveCommand;
 
-    public ConcreteDocumentObserver(SaveTextDocumentCommand saveCommand) {
+    public ConcreteDocumentObserver(SaveDocumentCommand saveCommand) {
         this.saveCommand = saveCommand;
     }
 
@@ -9,6 +9,6 @@ public class ConcreteDocumentObserver implements DocumentObserver {
     public void update(Document document) {
         System.out.println("Документ был обновлен:");
         System.out.println("Новое содержимое: " + document.getContent());
-        saveCommand.execute(); // Сохраняем изменения в историю
+        saveCommand.execute();
     }
 }

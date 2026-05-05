@@ -8,8 +8,11 @@ public abstract class Document {
 
     public abstract String getContent();
     public abstract void setContent(String content);
-    protected abstract DocumentMemento createMemento();
-    protected abstract void restoreFromMemento(DocumentMemento memento);
+
+    public abstract void SetContent(String content);
+
+    // Сделано public, чтобы команды могли универсально сохранять состояние
+    public abstract DocumentMemento createMemento();
 
     public void addObserver(DocumentObserver observer) {
         this.observer = observer;
@@ -22,7 +25,7 @@ public abstract class Document {
     public void undoLastChange() {
         DocumentMemento memento = historyLogger.undo();
         if (memento != null) {
-            restoreFromMemento(memento);
+            memento.restore(); // Вызов без instanceof и явного приведения
             notifyObserver();
         }
     }

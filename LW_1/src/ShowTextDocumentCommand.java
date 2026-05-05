@@ -27,6 +27,6 @@ public class ShowTextDocumentCommand implements DocumentCommand {
 
     @Override
     public void undo() {
-        // Не требуется для этой команды
+        // Нужно чтобы не было ошибки howTextDocumentCommand is not abstract and does not override abstract method undo() in DocumentCommand
     }
 }

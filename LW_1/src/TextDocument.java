@@ -10,23 +10,23 @@ public class TextDocument extends Document {
     public String getContent() {
         return content;
     }
+@Override
+public void SetContent(String content){
 
-    @Override
+}
+     @Override
     public void setContent(String content) {
         saveStateToHistory();
         this.content = content;
         notifyObserver();
     }
 
-    @Override
-    protected DocumentMemento createMemento() {
-        return new TextDocumentMemento(content);
+    public void restoreContent(String content) {
+        this.content = content;
     }
 
     @Override
-    protected void restoreFromMemento(DocumentMemento memento) {
-        if (memento instanceof TextDocumentMemento) {
-            this.content = ((TextDocumentMemento) memento).getText();
-        }
+    public DocumentMemento createMemento() {
+        return new TextDocumentMemento(this, content);
     }
 }

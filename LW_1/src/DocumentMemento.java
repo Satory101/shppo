@@ -8,4 +8,8 @@ public abstract class DocumentMemento {
     public String getType() {
         return type;
     }
+
+    // Полиморфные методы, избавляющие от instanceof и приведения типов
+    public abstract void restore();
+    public abstract String getDetails();
 }
