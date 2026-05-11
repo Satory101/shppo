@@ -7,7 +7,7 @@ public class SaveDocumentCommand implements DocumentCommand {
         this.historyLogger = historyLogger;
     }
 
-   @Override
+    @Override
     public void execute() {
         historyLogger.addMemento(document.createMemento());
     }

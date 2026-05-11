@@ -8,12 +8,12 @@ public class TextDocumentMemento extends DocumentMemento {
         this.text = text;
     }
 
-     @Override
+    @Override
     public void restore() {
         document.restoreContent(this.text);
     }
 
-     @Override
+    @Override
     public String getDetails() {
         return text;
     }

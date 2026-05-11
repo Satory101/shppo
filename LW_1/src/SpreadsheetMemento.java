@@ -11,12 +11,12 @@ public class SpreadsheetMemento extends DocumentMemento {
         this.cells = new HashMap<>(cells);
     }
 
-     @Override
+    @Override
     public void restore() {
         document.restoreCells(this.cells);
     }
 
-     @Override
+    @Override
     public String getDetails() {
         return cells.toString();
     }

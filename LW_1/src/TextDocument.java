@@ -10,11 +10,8 @@ public class TextDocument extends Document {
     public String getContent() {
         return content;
     }
-@Override
-public void SetContent(String content){
 
-}
-     @Override
+    @Override
     public void setContent(String content) {
         saveStateToHistory();
         this.content = content;

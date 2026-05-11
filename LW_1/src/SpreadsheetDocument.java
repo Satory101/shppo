@@ -16,14 +16,10 @@ public class SpreadsheetDocument extends Document {
     }
 
     @Override
-    public void setContent (String content){
-
-}
-
-    @Override
-    public void SetContent (String content){
-
+    public void setContent(String content) {
+        // Логика парсинга строки для заполнения ячеек, если требуется
     }
+
     public void setCell(String cellReference, String content) {
         cells.put(cellReference, content);
         saveStateToHistory();
@@ -58,7 +54,7 @@ public class SpreadsheetDocument extends Document {
         this.cells.putAll(mementoCells);
     }
 
-     @Override
+    @Override
     public DocumentMemento createMemento() {
         return new SpreadsheetMemento(this, new HashMap<>(cells));
     }
